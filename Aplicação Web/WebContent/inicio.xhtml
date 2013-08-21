@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Aplica��o Web</title>
+	<title>Aplicação Web</title>
 	<h:outputStylesheet library="css/" name="app.css" />
 </h:head>
 <h:body onload="document.getElementById('form:campo-busca').focus()">
@@ -33,7 +33,7 @@
 					<h:selectBooleanCheckbox value="#{item.selecionado}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">C�digo</f:facet>
+					<f:facet name="header">Código</f:facet>
 					<h:outputText value="#{item.codigo}" />
 				</h:column>
 				<h:column>
@@ -48,7 +48,7 @@
 					<h:outputText value="#{item.nome}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">Endere�o</f:facet>
+					<f:facet name="header">Endereço</f:facet>
 					<h:outputText value="#{item.endereco}" />
 				</h:column>
 			</h:dataTable>
