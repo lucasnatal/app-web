@@ -13,7 +13,7 @@
 		<h:form id="form">
 			<div class="search-bar">
 				<h:panelGrid columns="1" >
-					<h:outputLabel value="Pesquisar:" />
+					<h:outputLabel value="Pesquisar por nome:" />
 					<h:inputText id="campo-busca" styleClass="campo-busca" value="#{componentesBean.filtro}">
 						<f:ajax event="keyup" listener="#{componentesBean.buscar}"
 								render="relatorio" />
