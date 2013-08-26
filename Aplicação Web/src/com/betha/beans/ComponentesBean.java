@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.betha.business.Pessoa;
 import com.betha.business.PessoaComparator;
 import com.betha.daos.PessoaDAO;
+import com.betha.util.FacesUtil;
 
 @ManagedBean
 @ViewScoped
@@ -22,6 +25,8 @@ public class ComponentesBean {
 	private boolean sorted;
 	private boolean asc;
 	private String filtro;
+	
+	private Pessoa pessoaSelecionada;
 
 	public ComponentesBean() {
 		PessoaDAO pessoaDao = new PessoaDAO();
@@ -124,5 +129,28 @@ public class ComponentesBean {
 				this.filtrados.add(this.lista.get(i));
 			}
 		}
+	}
+	public void editar(Pessoa pessoa)
+	{
+		if(this.pessoaSelecionada == null || this.pessoaSelecionada != pessoa){
+			this.pessoaSelecionada = pessoa;
+		}else{
+			this.pessoaSelecionada = null;
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro salvo com sucesso!", ""));
+		}
+	}
+	public void excluir(Pessoa pessoa){
+		this.lista.remove(pessoa);
+		
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Pessoa excluída com sucesso!", ""));
+	}
+	public Pessoa getPessoaSelecionada() {
+		return pessoaSelecionada;
+	}
+
+	public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
+		this.pessoaSelecionada = pessoaSelecionada;
 	}
 }

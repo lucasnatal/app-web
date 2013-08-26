@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import com.betha.business.Pessoa;
 import com.betha.daos.PessoaDAO;
 
-@FacesConverter(forClass = Pessoa.class)
+
 public class PessoaConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {

@@ -29,10 +29,9 @@ public class PessoaDAO {
 
 	public Pessoa buscarPorCodigo(Integer codigo) {
 
-		for (Iterator iterator = this.lista.iterator(); iterator.hasNext();) {
-			Pessoa pessoa = (Pessoa) iterator.next();
-			if (pessoa.getCodigo() == codigo)
-				return pessoa;
+		for (int i = 0; i < this.lista.size(); i++) {
+			if(this.lista.get(i).getCodigo() == codigo)
+				return this.lista.get(i);
 		}
 		return null;
 	}

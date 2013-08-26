@@ -1,7 +1,11 @@
 @CHARSET "ISO-8859-1";
 
+body{
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 11px;
+}
 tr:nth-child(odd) {
-	background-color: #e8f2fe;
+	background-color: #f6f5ed;
 }
 
 tr:nth-child(even) {
@@ -14,20 +18,19 @@ table {
 	border: 1px solid #d5d5d5;
 	width: 100%;
 }
-
 th,td {
 	padding: 5px;
 }
 
 th {
-	background-color: #3a75af;
+	background-color: #3f4944;
 	color: white;
 }
 
 .container {
 	width: 950px;
 	margin-left: auto;
-	margin-right: auto
+	margin-right: auto;
 }
 
 .check-column {
@@ -53,3 +56,52 @@ th {
 	border: 1px solid #cccccc;
 	padding: 3px;
 }
+
+.edit-column {
+	width: 20px;
+}
+
+.edit-container {
+	background-color: white;
+	width: 500px;
+	height: auto;
+	border: 1px solid #CCC;
+	
+	padding: 10px;
+	border-radius: 4px;
+	box-shadow: 1px 1px 2px #CCC;
+}
+.window {
+	margin-left: 225px ;
+	margin-top: 100px;
+	position: absolute;
+	z-index: 999999;
+}
+table .codigo-column {
+	width: 30px;
+}
+table .nome-column {
+	width: 200px;
+}
+td .input-text {
+	padding: 0;
+	width: 100%;
+	border: 1px solid #CCC;
+	height: 100%;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 11px;
+}
+.check-info {
+	background-image: url("#{resource:images/check.png}");
+}
+
+.message-info{
+	background-color: #82d565;
+	color: white;
+	padding: 6px;
+	border: 1px solid #347c34;
+	border-radius: 6px;
+	font-family: Verdana, Arial, Tahoma;
+	font-weight: bold;
+}
+
