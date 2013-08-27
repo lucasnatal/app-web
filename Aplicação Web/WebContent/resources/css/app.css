@@ -92,7 +92,7 @@ td .input-text {
 	font-size: 11px;
 }
 .check-info {
-	background-image: url("#{resource:images/check.png}");
+	
 }
 
 .message-info{
