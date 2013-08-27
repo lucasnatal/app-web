@@ -12,7 +12,7 @@ public class PessoaDAO {
 	public PessoaDAO() {
 		this.lista = new ArrayList<Pessoa>();
 		this.lista.add(new Pessoa(1, "Cristiano Soares Teixeira",
-				"Rua Estephano Dagostim, 127", "3432-7448"));
+				"Rua Álvaro de Oliveira", "4141-4545"));
 		this.lista.add(new Pessoa(2, "Maria José da Silva",
 				"Rua Geral, sem número", "3432-0000"));
 		this.lista.add(new Pessoa(3, "João Pereira",
