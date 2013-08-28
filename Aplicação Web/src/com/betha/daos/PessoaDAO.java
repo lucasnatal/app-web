@@ -4,38 +4,75 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
 import com.betha.business.Pessoa;
+import com.betha.util.FabricaSessao;
 
 public class PessoaDAO {
+	private Session session;
 	private List<Pessoa> lista;
 
 	public PessoaDAO() {
-		this.lista = new ArrayList<Pessoa>();
-		this.lista.add(new Pessoa(1, "Antônio João Shultz",
-				"Rua Álvaro de Oliveira", "4141-4545"));
-		this.lista.add(new Pessoa(2, "Maria José da Silva",
-				"Rua Geral, sem número", "3432-0000"));
-		this.lista.add(new Pessoa(3, "João Pereira",
-				"Avenida Centenário, 1542", "3437-7445"));
-		this.lista.add(new Pessoa(4, "Eduardo Gonçalves",
-				"Rua Machado de Assis, 345", "8841-6952"));
-		this.lista.add(new Pessoa(5, "Joana Gusmão",
-				"Travessa Elias Benedetti", "2106-4545"));
-		this.lista.add(new Pessoa(6, "Fábio de Souza Machado",
-				"Rua Carlos Henrique Medeiros, 234", "4545-2421"));
-		this.lista.add(new Pessoa(7, "João Pereira",
-				"Avenida Centenário, 1542", "3437-7445"));
+		this.setSession(FabricaSessao.abrirSessao());
 	}
 
 	public Pessoa buscarPorCodigo(Integer codigo) {
 
 		for (int i = 0; i < this.lista.size(); i++) {
-			if(this.lista.get(i).getCodigo() == codigo)
+			if (this.lista.get(i).getCodigo() == codigo)
 				return this.lista.get(i);
 		}
 		return null;
 	}
-	public ArrayList<Pessoa> listarTodas(){
-		return (ArrayList<Pessoa>) this.lista;
+
+	public List<Pessoa> listarTodas() {
+		return this.session.createCriteria(Pessoa.class).list();
+	}
+	
+
+	public List<Pessoa> listarOrdenadoPor(Boolean asc, String por) {
+		return (asc ? session.createCriteria(Pessoa.class)
+				.addOrder(Order.asc(por)).list() : session
+				.createCriteria(Pessoa.class).addOrder(Order.desc(por)).list());
+	}
+
+	public List<Pessoa> listarOrdenadoPor(Boolean asc, String por, String filtro) {
+		return (asc ? session.createCriteria(Pessoa.class)
+				.add(Restrictions.like(por, filtro, MatchMode.ANYWHERE))
+				.addOrder(Order.asc(por)).list() : session
+				.createCriteria(Pessoa.class)
+				.add(Restrictions.like(por, filtro, MatchMode.ANYWHERE))
+				.addOrder(Order.desc(por)).list());
+	}
+
+	public List<Pessoa> buscar(String column, String value, Boolean asc) {
+
+		return (asc ? session.createCriteria(Pessoa.class)
+				.add(Restrictions.like(column, value, MatchMode.ANYWHERE))
+				.addOrder(Order.asc(column)).list() 
+				: 
+				session.createCriteria(Pessoa.class)
+				.add(Restrictions.like(column, value, MatchMode.ANYWHERE))
+				.addOrder(Order.desc(column)).list());
+	}
+
+	public void update(Pessoa pessoa) {
+		Transaction t = session.beginTransaction();
+		session.merge(pessoa);
+		t.commit();
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
 }

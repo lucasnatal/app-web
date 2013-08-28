@@ -9,9 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
+
 import com.betha.business.Pessoa;
 import com.betha.business.PessoaComparator;
 import com.betha.daos.PessoaDAO;
+import com.betha.util.FabricaSessao;
 import com.betha.util.FacesUtil;
 
 @ManagedBean
@@ -25,11 +28,13 @@ public class ComponentesBean {
 	private boolean sorted;
 	private boolean asc;
 	private String filtro;
+	private PessoaDAO pessoaDao;
+
 	
 	private Pessoa pessoaSelecionada;
 
 	public ComponentesBean() {
-		PessoaDAO pessoaDao = new PessoaDAO();
+		this.pessoaDao = new PessoaDAO();
 		this.lista = pessoaDao.listarTodas();
 		this.selecionados = new ArrayList<Pessoa>();
 		this.filtrados = new ArrayList<Pessoa>();
@@ -107,7 +112,7 @@ public class ComponentesBean {
 
 	public void marcarTodos() {
 		for (int i = 0; i < this.lista.size(); i++) {
-			this.lista.get(i).setSelecionado(this.checkboxSelecionado);
+			this.lista.get(i).selecionado =(this.checkboxSelecionado);
 		}
 	}
 
@@ -115,31 +120,29 @@ public class ComponentesBean {
 		this.setSorted(true);
 		this.setAsc(!this.asc);
 		if (this.filtro != null && this.filtro.length() > 0) {
-			Collections.sort(this.filtrados, new PessoaComparator(this.asc));
+			this.filtrados = pessoaDao.listarOrdenadoPor(asc, "nome", this.filtro);
 		} else {
-			Collections.sort(this.lista, new PessoaComparator(this.asc));
+			this.lista = pessoaDao.listarOrdenadoPor(asc, "nome");
 		}
 	}
 
 	public void buscar() {
-		this.filtrados = new ArrayList<Pessoa>();
-		for (int i = 0; i < this.lista.size(); i++) {
-			if (this.lista.get(i).getNome().toLowerCase()
-					.contains(this.filtro.toLowerCase())) {
-				this.filtrados.add(this.lista.get(i));
-			}
-		}
+		
+			this.filtrados = this.pessoaDao.buscar("nome", this.filtro, this.asc);
 	}
+	
 	public void editar(Pessoa pessoa)
 	{
 		if(this.pessoaSelecionada == null || this.pessoaSelecionada != pessoa){
 			this.pessoaSelecionada = pessoa;
 		}else{
 			this.pessoaSelecionada = null;
+			this.pessoaDao.update(pessoa);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro salvo com sucesso!", ""));
 		}
 	}
+	
 	public void excluir(Pessoa pessoa){
 		this.lista.remove(pessoa);
 		
@@ -153,4 +156,5 @@ public class ComponentesBean {
 	public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
 		this.pessoaSelecionada = pessoaSelecionada;
 	}
+
 }
