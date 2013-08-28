@@ -62,6 +62,12 @@ public class PessoaDAO {
 				.addOrder(Order.desc(column)).list());
 	}
 
+	public void delete(Pessoa pessoa){
+		Transaction t = session.beginTransaction();
+		session.delete(pessoa);
+		t.commit();
+	}
+	
 	public void update(Pessoa pessoa) {
 		Transaction t = session.beginTransaction();
 		session.merge(pessoa);

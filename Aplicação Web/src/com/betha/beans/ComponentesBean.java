@@ -144,7 +144,7 @@ public class ComponentesBean {
 	}
 	
 	public void excluir(Pessoa pessoa){
-		this.lista.remove(pessoa);
+		this.pessoaDao.delete(pessoa);
 		
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Pessoa excluída com sucesso!", ""));
